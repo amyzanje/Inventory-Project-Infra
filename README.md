@@ -73,7 +73,9 @@ Inventory Management
 **CloudTrail_bucket** = Bucket Name in which CloudTrail logs will strore.
 
 **sender_email** = Email ID of sender for Inventory Report.
+
 **recipient_emails** = Email ID of recipient for Inventory Report.
+
 **schedule_time** = Schedule time for AWS Resource Monitoring in  UTC+0 format.
 
 **This is UTC 0 time where**
