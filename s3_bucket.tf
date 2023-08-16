@@ -2,7 +2,7 @@
 
 resource "aws_s3_bucket" "Inventory_bucket" {
   bucket = "${var.Inventory_bucket}-${var.accountid}"
-  force_destroy = true
+  #force_destroy = true
 
   tags = {
     Environment = var.environment
