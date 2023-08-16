@@ -42,6 +42,8 @@ Inventory data is collected automatically when the new resource is deployed in r
 
 Daily routine Monitoring of AWS resource is the time-consuming and tedious tasks of every cloud engineer.By leveraging AWS Lambda and Python, we have been able to design a robust solution that significantly reduces the manual effort required for these tasks.
 
+At specified time Cloudwatch Rule will trigger the Lamba Function and it will compare the state of resources mentioned in Inventory file and current state of resources and sends an Email to Cloud Admin's with current state of resources.
+
  ## Architecture Overview
 
 The system architecture consists mainly AWS Lambda function, CloudTrail events, Clouswatch Rules, IAM Roles, S3 Bucket, Simple Email Service to send the notification to Cloud Admin.
