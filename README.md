@@ -62,7 +62,7 @@ Inventory Management
 
  ## Deployment Guide
 
- - Variables
+- **Variables**
 
 **region** = Deployment and Inventory region
 
