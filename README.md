@@ -62,8 +62,37 @@ Inventory Management
 
  ## Deployment Guide
 
+ - Variables
+
+**region** = Deployment and Inventory region
+
+**accountid** = AWS Account ID
+
+**Inventory_bucket** = Bucket Name in which Inventory Excel file will strore.
+
+**CloudTrail_bucket** = Bucket Name in which CloudTrail logs will strore.
+
+**sender_email** = Email ID of sender for Inventory Report.
+**recipient_emails** = Email ID of recipient for Inventory Report.
+**schedule_time** = Schedule time for AWS Resource Monitoring in  UTC+0 format.
+
+**This is UTC 0 time where**
+
+45 = Minutes
+ 
+ 9 = Hours
+
+\* = Day of month
+
+\* = Month
+
+? = Day of week
+
+\* = Year
+
  1. Clone this repo locally.
  2. Set the AWS secret key , access key and region as per your requirement.
- 3. Initialize the terraform code (terraform init)
- 4. Make terraform plan and through the Resources which will created in this project (terraform plan)
- 5. Deployment of automation Resources in your account (terraform apply)
+ 3. Set the required variable values.
+ 4. Initialize the terraform code (terraform init)
+ 5. Make terraform plan and through the Resources which will created in this project (terraform plan)
+ 6. Deployment of automation Resources in your account (terraform apply)
