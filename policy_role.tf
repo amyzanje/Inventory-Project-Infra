@@ -82,3 +82,44 @@ resource "aws_iam_role_policy_attachment" "Lambda_role_policy_attachment_cloudtr
   
 }
 
+
+# Poliy and Role schedule rule
+
+
+resource "aws_iam_policy" "EventBridge_Scheduler_policy" {
+    name = "Amazon-EventBridge-Scheduler-Execution-Policy"
+    path = "/service-role/"
+    
+    policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "${aws_lambda_function.Inventory_Lambda_Function.arn}:*",
+                "a${aws_lambda_function.Inventory_Lambda_Function.arn}"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+
+resource "aws_iam_role" "EventBridge_Schedule_Role" {
+    path = "/service-role/"
+    name = "Amazon_EventBridge_Scheduler_LAMBDA"
+    assume_role_policy = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"scheduler.amazonaws.com\"},\"Action\":\"sts:AssumeRole\",\"Condition\":{\"StringEquals\":{\"aws:SourceAccount\":\"564572526252\"}}}]}"
+    max_session_duration = 3600
+    tags = {}
+}
+
+resource "aws_iam_role_policy_attachment" "EventBridge_Schedule_Policy_attachement" {
+  role       = aws_iam_role.EventBridge_Schedule_Role.name
+  policy_arn = aws_iam_policy.EventBridge_Scheduler_policy.arn
+  
+}

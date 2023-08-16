@@ -32,10 +32,25 @@ variable "recipient_emails" {
   default = ["amyzanje@gmail.com", "sszanje@gmail.com"]
 }
 
+variable "schedule_time" {
+  type = string
+  default = "47 9 * * ? *"
+}
+
+/*
+
+**This is UTC 0 time where**
+45 = Minutes
+9 = Hours
+* = Day of month
+* = Month
+? = Day of week
+* = Year
+
+*/
 
 
-
-# Not need to change 
+# Not need to change  
 
 
 variable "environment" {

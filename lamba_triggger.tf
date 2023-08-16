@@ -45,3 +45,12 @@ resource "aws_lambda_permission" "lambda_trigger_permission6" {
   
   source_arn = aws_cloudwatch_event_rule.EC2_ELB_KEY_EIP_SG_Creation_Rule.arn    
 }
+
+
+resource "aws_lambda_permission" "lambda_trigger_permission7" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.Inventory_Lambda_Function.function_name
+  principal     = "events.amazonaws.com"
+  
+  source_arn = aws_cloudwatch_event_rule.scheduler_schedule.arn    
+}

@@ -12,6 +12,7 @@ resource "aws_lambda_layer_version" "Lambda_layer_Inventory_project" {
 
 # Inventory_Lambda_Function_Daily_Monitoring
 
+
 resource "aws_lambda_function" "Inventory_Lambda_Function" {
   description = "Inventory_Lambda_Function_Daily_Monitoring"
   environment {
