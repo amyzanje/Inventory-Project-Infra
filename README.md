@@ -44,7 +44,7 @@ Daily routine Monitoring of AWS resource is the time-consuming and tedious tasks
 
  ## Architecture Overview
 
-The system architecture consists mainly AWS Lambda function, CloudTrail events, S3 Bucket, Simple Email Service to send the notification to Cloud Admin.
+The system architecture consists mainly AWS Lambda function, CloudTrail events, Clouswatch Rules, IAM Roles, S3 Bucket, Simple Email Service to send the notification to Cloud Admin.
 
 
 ## Architecture Diagrams
