@@ -455,6 +455,8 @@ def update_excel_with_instance_details(event, context):
             
  ############################################## Code for S3 Bucket ########################################################
  
+    s3_client_2 = boto3.client('s3', region_name='us-east-1')
+    
     workbook = openpyxl.load_workbook(excel_file)
     sheet = workbook['S3']
     
@@ -466,19 +468,23 @@ def update_excel_with_instance_details(event, context):
     
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=s3_id_column, max_col=s3_id_column):
         s3_bucket = row[0].value
+        # print(s3_bucket)
         
         
-        bucket_response = s3_client.list_buckets(Bucket=s3_bucket)
         
+        bucket_response = s3_client_2.list_buckets()
+        print(f"{s3_bucket} {bucket_response}")
         for bucket in bucket_response['Buckets']:
             if bucket['Name'] == s3_bucket:
+                
                creation_date = bucket['CreationDate']
                creation_date= str(creation_date)
+               break
             else:
-                creation_date = "Bucket Not Found "
+               creation_date = "Bucket Not Found "
         
         try :
-            bucket_location_response = s3_client.get_bucket_location(Bucket=s3_bucket)  
+            bucket_location_response = s3_client_2.get_bucket_location(Bucket=s3_bucket)  
             if bucket_location_response['LocationConstraint'] is None:
                 creation_region = 'us-east-1'
             else:
