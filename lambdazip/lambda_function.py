@@ -468,34 +468,32 @@ def update_excel_with_instance_details(event, context):
         s3_bucket = row[0].value
         
         
-         
-
-        try:
-            bucket_response = s3_client.head_bucket(Bucket=s3_bucket)
-            creation_date = bucket_response['ResponseMetadata']['HTTPHeaders']['date']
-            creation_region = bucket_response['ResponseMetadata']['HTTPHeaders']['x-amz-bucket-region']
-            
-            creation_date= str(creation_date)
-            
-            sheet.cell(row=row[0].row, column= 2, value=creation_region )
-            sheet.cell(row=row[0].row, column= 3, value=creation_date )
-            
-            s3_list.append([s3_bucket,creation_region,creation_date ])
-            
+        bucket_response = s3_client.list_buckets(Bucket=s3_bucket)
+        
+        for bucket in bucket_response['Buckets']:
+            if bucket['Name'] == s3_bucket:
+               creation_date = bucket['CreationDate']
+               creation_date= str(creation_date)
+            else:
+                creation_date = "Bucket Not Found "
+        
+        try :
+            bucket_location_response = s3_client.get_bucket_location(Bucket=s3_bucket)  
+            if bucket_location_response['LocationConstraint'] is None:
+                creation_region = 'us-east-1'
+            else:
+                creation_region = bucket_location_response['LocationConstraint']
+                
         except ClientError as e:
-            #  print("An error occurred:", e)
-             
+            print("An error occurred:", e)
+            creation_region = 'Bucket Not Found'
             
-                creation_date = '-'
-                creation_region = 'Bucket Not Found'
-                
-                s3_list.append([s3_bucket,creation_region,creation_date ])
-                
-                
-            
-                sheet.cell(row=row[0].row, column= 2, value=creation_region )
-                sheet.cell(row=row[0].row, column= 3, value=creation_date )
-             
+                       
+        sheet.cell(row=row[0].row, column= 2, value=creation_region )
+        sheet.cell(row=row[0].row, column= 3, value=creation_date )
+    
+        s3_list.append([s3_bucket,creation_region,creation_date ])
+               
             
     excel_file = io.BytesIO()
     workbook.save(excel_file)
