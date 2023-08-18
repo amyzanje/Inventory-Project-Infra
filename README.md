@@ -80,17 +80,17 @@ Inventory Management
 
 **This is UTC 0 time where**
 
-45 = Minutes
+     45 = Minutes
  
- 9 = Hours
+      9 = Hours
 
-\* = Day of month
+     \* = Day of month
 
-\* = Month
+     \* = Month
 
-? = Day of week
+     ? = Day of week
 
-\* = Year
+     \* = Year
 
  1. Clone this repo locally.
  2. Set the AWS secret key , access key and region as per your requirement.
