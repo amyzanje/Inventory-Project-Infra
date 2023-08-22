@@ -40,7 +40,7 @@ def update_excel_with_instance_details(event, context):
     instance_id_column = 1
     
     # Loop through rows and get instance IDs
-    status_list = [['Instatnce Id','Tags', 'Instance Status','Instance Status Check' ,'System Status Check','Public IP', 'Private IpAddress', 'Instance Type' , 'Availability Zone' , 'Key Name' ]]
+    status_list = [['Instatnce Id','Name', 'Instance Status','Instance Status Check' ,'System Status Check','Public IP', 'Private IpAddress', 'Instance Type' , 'Availability Zone' , 'Key Name' ]]
 
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=instance_id_column, max_col=instance_id_column):
         instance_id = row[0].value
@@ -68,7 +68,12 @@ def update_excel_with_instance_details(event, context):
                     InstanceType= instance.get('InstanceType', '-')
                     AvailabilityZone= instance.get('Placement', {}).get('AvailabilityZone', '-')
                     KeyName= instance.get('KeyName', '-')
-                    Tags=instance['Tags'][0]['Value']
+                    for tag in instance['Tags']:
+                        if tag['Key'] == 'Name':
+                           Tags= (tag['Value'])
+                           break
+                        else :
+                           Tags= '-'
                     # instance_status_check = response2['InstanceStatuses'][0]['InstanceStatus']['Status']
                     # system_status_check = response2['InstanceStatuses'][0]['SystemStatus']['Status']
                     if 'InstanceStatuses' in response2 and len(response2['InstanceStatuses']) > 0:
@@ -133,7 +138,7 @@ def update_excel_with_instance_details(event, context):
     
     
     ec2_table_html ='<div style="margin-bottom: 20px;">'
-    ec2_table_html +='<h3>EC2 Inventor</h3>'
+    ec2_table_html +='<h3>EC2 Inventory</h3>'
     ec2_table_html += "<table border='1'><tr>"
     headers = status_list[0]
     for header in headers:
@@ -285,7 +290,7 @@ def update_excel_with_instance_details(event, context):
                 responce = ec2_client.volumes.filter(VolumeIds=[vol_id])
                 for volume in responce:
                               Volume_id=volume.id
-                              Volume_Size=volume.size
+                              Volume_Size=f"{volume.size} GB"
                               Volume_Type=volume.volume_type
                               Volume_State= f"{volume.state}"
                               Creation_Time=f"{volume.create_time}"
