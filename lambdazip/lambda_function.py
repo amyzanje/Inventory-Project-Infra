@@ -80,8 +80,8 @@ def update_excel_with_instance_details(event, context):
                          instance_status_check = response2['InstanceStatuses'][0]['InstanceStatus']['Status']
                          system_status_check = response2['InstanceStatuses'][0]['SystemStatus']['Status']
                     else:
-                         instance_status_check = 'No instance status found'
-                         system_status_check = 'No system status found'
+                         instance_status_check = '-'
+                         system_status_check = '-'
                     
                     
                 status_list.append([instance_id, Tags, instance_state ,instance_status_check,system_status_check, Public_Ip, PrivateIpAddress, InstanceType, AvailabilityZone, KeyName ])  # Changed to list format
@@ -263,7 +263,7 @@ def update_excel_with_instance_details(event, context):
     vol_column = 1
     
     # Loop through rows and get instance IDs
-    vol_status_list = [['Volume Id', 'Volume Size', 'Volume State', 'Volume Type','Volume AZ', 'Volume Attachment', 'Encryption', 'Creation Time']]
+    vol_status_list = [['Volume Id', 'Volume Size (GB)', 'Volume State', 'Volume Type','Volume AZ', 'Volume Attachment', 'Encryption', 'Creation Time']]
 
     for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=vol_column, max_col=vol_column):
         vol_id = row[0].value
@@ -290,7 +290,7 @@ def update_excel_with_instance_details(event, context):
                 responce = ec2_client.volumes.filter(VolumeIds=[vol_id])
                 for volume in responce:
                               Volume_id=volume.id
-                              Volume_Size=f"{volume.size} GB"
+                              Volume_Size={volume.size}
                               Volume_Type=volume.volume_type
                               Volume_State= f"{volume.state}"
                               Creation_Time=f"{volume.create_time}"
