@@ -290,7 +290,7 @@ def update_excel_with_instance_details(event, context):
                 responce = ec2_client.volumes.filter(VolumeIds=[vol_id])
                 for volume in responce:
                               Volume_id=volume.id
-                              Volume_Size={volume.size}
+                              Volume_Size=volume.size
                               Volume_Type=volume.volume_type
                               Volume_State= f"{volume.state}"
                               Creation_Time=f"{volume.create_time}"
